@@ -1,6 +1,8 @@
+const productLookup={};
+const cartItems={};
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('https://mp263ab9bd142335b39a.free.beeceptor.com/data');
+        const response = await fetch('https://mp70a070efeb8bb8cb12.free.beeceptor.com/data');
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -12,11 +14,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+let cart = document.getElementById('cart');
+cart.addEventListener("click", (event)=>{
+    if(event.target.classList.contains("remove-item-btn")){
+            console.log("remove btn clicked");
+            const selectedID = event.target.id.replace("-remove-btn", "");
+            console.log(selectedID);
+            productLookup[selectedID].count=0;
+            delete cartItems[selectedID];
+            let buttonToReset=document.getElementById(selectedID+"-add-btn");
+            buttonToReset.style.display="flex";
+            buttonToReset.nextElementSibling.style.display="none";
+            cartRefresh();
+        }
+});
+
 function renderProducts(data)
 {
     let container = document.getElementById('products');
     let htmlString='';
-    const productLookup={};
     data.forEach(element => {
             productLookup[element.id]=element;
             element["count"]=0;
@@ -26,22 +42,18 @@ function renderProducts(data)
     container.addEventListener("click", (event)=>{
         const card = event.target.closest('.product-card');
         //eventlistner to change 'Add to card' button with 'increment/decrement' buttons'
-        if(event.target.classList.contains("idle"))
-        {
+        if(event.target.classList.contains("idle")){
             event.target.style.display="none";
             event.target.nextElementSibling.style.display="flex";
-            productLookup[card.dataset.id].count++;
-            let p=document.getElementById(card.dataset.id+'-count');
-            console.log(p);
-            p.innerText=productLookup[card.dataset.id].count;
+            increment(card.dataset.id);
         }
-        if(event.target.classList.contains("inner-btn"))
-        {
-            console.log(event.target);
-            if(event.target.id.includes("inc"))
-            {
-                console.log("inc");
-                increment(card.dataset.id, event.target);
+        //eventlistner for 'increment/decrement' buttons'
+        if(event.target.classList.contains("icon-btn")){
+            if(event.target.id.includes("inc")){
+                increment(card.dataset.id);
+            }
+            if(event.target.id.includes("dec")){
+                decrement(card.dataset.id, event.target);
             }
         }
     })
@@ -58,11 +70,11 @@ function createCard(cardData)
                     Add to cart
                 </button>
                 <span class="add-btn added-to-cart">
-                    <button class="inner-btn" id="${cardData.id}-dec-btn">
+                    <button class="icon-btn" id="${cardData.id}-dec-btn">
                         <img src="assets/images/icon-decrement-quantity.svg">
                     </button>
                     <p id="${cardData.id}-count">Add to cart</p>
-                    <button class="inner-btn" id="${cardData.id}-inc-btn">
+                    <button class="icon-btn" id="${cardData.id}-inc-btn">
                         <img src="assets/images/icon-increment-quantity.svg">
                     </button>
                 </span>
@@ -76,7 +88,77 @@ function createCard(cardData)
     `;
 }
 
-function increment(selectedID, clickedButton)
+function increment(selectedID){
+    productLookup[selectedID].count++;
+    let p=document.getElementById(selectedID+'-count');
+    p.innerText=productLookup[selectedID].count;
+    cartIncrement(selectedID);
+}
+
+function decrement(selectedID, clickedButton){
+    productLookup[selectedID].count--;
+    let p=document.getElementById(selectedID+'-count');
+    if(productLookup[selectedID].count==0)
+    {
+        clickedButton.parentElement.style.display="none";
+        clickedButton.parentElement.previousElementSibling.style.display="flex";
+    }
+    p.innerText=productLookup[selectedID].count;
+    cartDecrement(selectedID);
+}
+
+function cartIncrement(selectedID)
 {
-    
+    if(!cartItems[selectedID]){
+        cartItems[selectedID]=productLookup[selectedID];
+    }
+    cartRefresh();
+}
+
+function cartDecrement(selectedID)
+{
+    if(cartItems[selectedID].count==0){
+        delete cartItems[selectedID];
+    }
+    cartRefresh();
+}
+
+function cartRefresh()
+{
+    let container=document.getElementById('cart-items-list');
+    let htmlString='';
+    for(let key in cartItems){
+        htmlString+=renderCartItem(key);
+    }
+    container.innerHTML=htmlString;
+    document.getElementById('cart-count').innerText=Object.keys(cartItems).length;
+    document.getElementById('cart-order-total').innerText=calculateCartTotal();
+}
+
+function renderCartItem(selectedID)
+{
+    return `
+        <li class="cart-item" id="${selectedID}-cart-item">
+            <div class="caert-item-details-container">
+                <p class="cart-item-name">${productLookup[selectedID].name}</p>
+                <span class="cart-item-details" id="${selectedID}-cart-item-details">
+                    <p class="cart-item-qty">${productLookup[selectedID].count}x</p>
+                    <p class="cart-item-price">@ ${productLookup[selectedID].price}</p>
+                    <p class="cart-item-total">${productLookup[selectedID].count*productLookup[selectedID].price}</p>
+                </span>
+            </div>
+            <button class="remove-item-btn" id="${selectedID}-remove-btn">
+                <img src="assets/images/icon-remove-item.svg">
+            </button>
+        </li>
+    `;
+}
+
+function calculateCartTotal()
+{
+    let total=0;
+    for(let key in cartItems){
+        total+=cartItems[key].count*cartItems[key].price;
+    }
+    return '$ '+total.toFixed(2);
 }

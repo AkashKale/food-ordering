@@ -14,6 +14,7 @@
 --rose-400: hsl(7, 20%, 60%);
 --rose-500: hsl(12, 20%, 44%);
 --rose-900: hsl(14, 65%, 9%);
+--white:#fff;
 
 --text-size-title: 20px;
 --text-size-body: 16px;
@@ -24,7 +25,7 @@
 body {
   font-family: 'Red-Hat',sans-serif;
   font-weight: 500;
-  background-color: var(--rose-50);
+  background-color: var(--rose-100);
   color: var(--rose-900);
   min-height: 100vh;
   padding: 1.5rem;
@@ -44,6 +45,7 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+  pointer-events: none;
 }
 
 /* ==========================================================================
@@ -132,7 +134,7 @@ img {
   color: var(--rose-50);
 }
 
-.inner-btn{
+.icon-btn{
     height:28px;
   width: 28px;
   display: flex;
@@ -184,6 +186,7 @@ img {
 }
 
 .cart-items-list {
+  padding-left: 0;
   list-style: none;
 }
 
@@ -208,16 +211,16 @@ img {
   font-size: 0.875rem;
 }
 
-.item-qty {
+.cart-item-qty {
   color: var(--red);
   font-weight: 600;
 }
 
-.item-price {
+.cart-item-price {
   color: var(--rose-400);
 }
 
-.item-total {
+.cart-item-total {
   color: var(--rose-500);
   font-weight: 600;
 }
@@ -249,10 +252,10 @@ img {
   font-size: 0.875rem;
 }
 
-.cart-order-total {
+.cart-total {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--rose-900);
+  color: var(--red);
 }
 
 .confirm-order-btn {
