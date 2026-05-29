@@ -178,6 +178,17 @@ img {
   height: fit-content;
 }
 
+#cart-content-empty{
+  display: flex;
+  flex-direction: column; /* Stacks items vertically */
+  align-items: center;    /* Centers items horizontally */
+  justify-content: center; /* Centers items vertically */
+  text-align: center;
+}
+
+#cart-content-true {
+  display:none;
+}
 .cart-title {
   color: var(--red);
   font-size: 1.5rem;

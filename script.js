@@ -2,7 +2,7 @@ const productLookup={};
 const cartItems={};
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('https://mp70a070efeb8bb8cb12.free.beeceptor.com/data');
+        const response = await fetch('https://mpd05c24322d93275f75.free.beeceptor.com/data');
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -27,6 +27,26 @@ cart.addEventListener("click", (event)=>{
             buttonToReset.nextElementSibling.style.display="none";
             cartRefresh();
         }
+    if(event.target.classList.contains("confirm-order-btn")){
+        let finalOrder=[];
+        for(let key in cartItems){
+            finalOrder.push({
+                id: cartItems[key].id,
+                qty: productLookup[key].count
+            });
+        }
+        console.log(finalOrder);
+        fetch('https://your-api-endpoint.com', {
+            method: 'POST', // Specify the method
+            headers: {
+                'Content-Type': 'application/json', // Tell the server you're sending JSON
+            },
+            body: JSON.stringify(finalOrder), // Convert JS object to JSON string
+        })
+        .then(response => response.json()) // Parse the backend's JSON response
+        .then(data => console.log('Success:', data))
+        .catch(error => console.error('Error:', error));
+    }    
 });
 
 function renderProducts(data)
@@ -125,6 +145,15 @@ function cartDecrement(selectedID)
 
 function cartRefresh()
 {
+    if(Object.keys(cartItems).length==0){
+     console.log("cart is empty");
+        document.getElementById('cart-content-true').style.display="none";
+        document.getElementById('cart-content-empty').style.display="flex";
+        document.getElementById('cart-count').innerText=0;
+        return;
+    }
+    document.getElementById('cart-content-true').style.display="block";
+    document.getElementById('cart-content-empty').style.display="none";
     let container=document.getElementById('cart-items-list');
     let htmlString='';
     for(let key in cartItems){

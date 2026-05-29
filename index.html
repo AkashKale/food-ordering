@@ -20,8 +20,11 @@
 
     <aside class="cart-section" id="cart">
       <h2 class="cart-title">Your Cart (<span id="cart-count">0</span>)</h2>
-      
-      <div class="cart-content">
+      <div class="cart-content" id="cart-content-empty">
+        <img src="assets/images/illustration-empty-cart.svg" alt="Empty Cart Illustration" class="empty-cart-image">
+        <p class="product-category">Your added items will appear here</p>
+      </div>
+      <div class="cart-content" id="cart-content-true">
         <ul id="cart-items-list" class="cart-items-list"></ul>
 
         <div class="cart-total-container">
