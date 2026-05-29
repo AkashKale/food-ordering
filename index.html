@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Product List & Cart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="page-container">
+    
+    <section class="products-section">
+      <h1 class="section-title">Desserts</h1>
+      
+      <div id="products" class="products-grid">
+        
+      </div>
+    </section>
+
+    <aside class="cart-section">
+      <h2 class="cart-title">Your Cart (<span id="cart-count">0</span>)</h2>
+      
+      <div class="cart-content">
+        <ul id="cart-items-list" class="cart-items-list"></ul>
+
+        <div class="cart-total-container">
+          <span>Order Total</span>
+          <span id="cart-order-total" class="cart-order-total">$0.00</span>
+        </div>
+
+        <button class="confirm-order-btn">Confirm Order</button>
+      </div>
+    </aside>
+
+  </main>
+<script src="script.js"></script>
+</body>
+</html>

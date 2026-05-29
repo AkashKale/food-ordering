@@ -1,0 +1,292 @@
+@font-face {
+  font-family: 'Red-Hat'; /* Give it a name to use later */
+  src: url('assets/fonts/RedHatText-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 300 700;
+  font-style: normal;
+}
+
+:root{
+--red: hsl(14, 86%, 42%);
+--green: hsl(159, 69%, 38%);
+--rose-50: hsl(20, 50%, 98%);
+--rose-100: hsl(13, 31%, 94%);
+--rose-300: hsl(14, 25%, 72%);
+--rose-400: hsl(7, 20%, 60%);
+--rose-500: hsl(12, 20%, 44%);
+--rose-900: hsl(14, 65%, 9%);
+
+--text-size-title: 20px;
+--text-size-body: 16px;
+--text-size-button: 14px;
+
+}
+
+body {
+  font-family: 'Red-Hat',sans-serif;
+  font-weight: 500;
+  background-color: var(--rose-50);
+  color: var(--rose-900);
+  min-height: 100vh;
+  padding: 1.5rem;
+}
+
+p {
+  margin: 0.25rem;
+}
+
+aside{
+    position: sticky;
+  top: 0; /* Adjust this value to add a gap from the top */
+  align-self: start; 
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==========================================================================
+   2. LAYOUT CONTAINER (Mobile First)
+   ========================================================================== */
+.page-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ==========================================================================
+   3. PRODUCTS GRID (Mobile First: 1 Column)
+   ========================================================================== */
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+/* Styles for JS-generated Product Cards */
+.product-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.image-container {
+  position: relative;
+}
+
+.product-image {
+  border-radius: 8px;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Centered Add to Cart Button overlapping the image bottom */
+.add-btn {
+     display: flex; 
+     height:46px;
+     justify-content: center; /* Horizontal centering */
+  align-items: center;     /* Vertical centering */
+    gap: 0.5rem;
+    font-size: var(--text-size-button);
+  font-family: inherit;
+  position: relative;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--rose-50);
+  border: 1px solid var(--rose-400);
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.add-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.added-to-cart {
+    display: none; 
+    width: fit-content;
+    padding: 0 1rem;
+    border: none;
+    background-color: var(--red);
+    color: var(--rose-50);
+}
+
+.added-to-cart:hover{
+    border-color: var(--red);
+  color: var(--rose-50);
+}
+
+.inner-btn{
+    height:28px;
+  width: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--red);
+  border: 1px solid var(--rose-50);
+  border-radius: 25px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.product-info{
+    display: block;
+    padding: -1rem;
+}
+.product-category {
+  color: var(--rose-400);
+  font-size: 0.875rem;
+}
+
+.product-name {
+  font-size: 16px; /* Match styleguide */
+  font-weight: 600;
+  color: var(--rose-900);
+}
+
+.product-price {
+  color: var(--red);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   4. CART SECTION
+   ========================================================================== */
+.cart-section {
+  background-color: var(--rose-50);
+  padding: 1.5rem;
+  border-radius: 12px;
+  height: fit-content;
+}
+
+.cart-title {
+  color: var(--red);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.cart-items-list {
+  list-style: none;
+}
+
+/* Styles for JS-generated Cart Items */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rose-100);
+}
+
+.cart-item-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.cart-item-details {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.item-qty {
+  color: var(--red);
+  font-weight: 600;
+}
+
+.item-price {
+  color: var(--rose-400);
+}
+
+.item-total {
+  color: var(--rose-500);
+  font-weight: 600;
+}
+
+.remove-item-btn {
+  background: none;
+  border: 1px solid var(--rose-300);
+  color: var(--rose-400);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.remove-item-btn:hover {
+  color: var(--rose-900);
+  border-color: var(--rose-900);
+}
+
+.cart-total-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  font-size: 0.875rem;
+}
+
+.cart-order-total {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--rose-900);
+}
+
+.confirm-order-btn {
+  width: 100%;
+  background-color: var(--red);
+  color: var(--rose-50);
+  border: none;
+  padding: 1rem;
+  border-radius: 25px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.confirm-order-btn:hover {
+  background-color: hsl(14, 86%, 30%);
+}
+
+/* ==========================================================================
+   5. DESKTOP RESPONSIVENESS (1440px Target layout)
+   ========================================================================== */
+@media (min-width: 900px) {
+  /* Layout shifts to side-by-side */
+  .page-container {
+    grid-template-columns: 1fr 380px;
+    align-items: start;
+    padding: 3rem 2rem;
+  }
+
+  /* Product list becomes 3 columns */
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem 1.5rem;
+  }
+}
